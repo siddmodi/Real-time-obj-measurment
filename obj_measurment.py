@@ -2,9 +2,9 @@ import cv2
 import utlis
 
 ###################################
-webcam = True
-path = '1.jpg'
-cap = cv2.VideoCapture(0)
+webcam = False
+path = 'image.jpg'
+cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
 cap.set(10,160)
 cap.set(3,1920)
 cap.set(4,1080)
@@ -16,6 +16,12 @@ hP= 297 *scale
 while True:
     if webcam:success,img = cap.read()
     else: img = cv2.imread(path)
+
+    k = cv2.waitKey(1)
+    if k%256 == 27:
+        # ESC pressed
+        print("Escape hit, closing...")
+        break
 
     imgContours , conts = utlis.getContours(img,minArea=50000,filter=4)
     if len(conts) != 0:
